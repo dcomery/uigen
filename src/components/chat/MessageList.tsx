@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { User, Bot, Loader2 } from "lucide-react";
 import { MarkdownRenderer } from "./MarkdownRenderer";
 import { ToolInvocation } from "./ToolInvocation";
+import { useLanguage } from "@/lib/contexts/language-context";
 
 interface MessageListProps {
   messages: Message[];
@@ -12,14 +13,16 @@ interface MessageListProps {
 }
 
 export function MessageList({ messages, isLoading }: MessageListProps) {
+  const { t } = useLanguage();
+
   if (messages.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-full px-4 text-center">
         <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-blue-50 mb-4 shadow-sm">
           <Bot className="h-7 w-7 text-blue-600" />
         </div>
-        <p className="text-neutral-900 font-semibold text-lg mb-2">Start a conversation to generate React components</p>
-        <p className="text-neutral-500 text-sm max-w-sm">I can help you create buttons, forms, cards, and more</p>
+        <p className="text-neutral-900 font-semibold text-lg mb-2">{t.emptyStateHeading}</p>
+        <p className="text-neutral-500 text-sm max-w-sm">{t.emptyStateSubheading}</p>
       </div>
     );
   }
@@ -71,7 +74,7 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
                           case "reasoning":
                             return (
                               <div key={partIndex} className="mt-3 p-3 bg-white/50 rounded-md border border-neutral-200">
-                                <span className="text-xs font-medium text-neutral-600 block mb-1">Reasoning</span>
+                                <span className="text-xs font-medium text-neutral-600 block mb-1">{t.reasoning}</span>
                                 <span className="text-sm text-neutral-700">{part.reasoning}</span>
                               </div>
                             );
@@ -99,7 +102,7 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
                         messages.indexOf(message) === messages.length - 1 && (
                           <div className="flex items-center gap-2 mt-3 text-neutral-500">
                             <Loader2 className="h-3 w-3 animate-spin" />
-                            <span className="text-sm">Generating...</span>
+                            <span className="text-sm">{t.generating}</span>
                           </div>
                         )}
                     </>
@@ -114,7 +117,7 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
                     messages.indexOf(message) === messages.length - 1 ? (
                     <div className="flex items-center gap-2 text-neutral-500">
                       <Loader2 className="h-3 w-3 animate-spin" />
-                      <span className="text-sm">Generating...</span>
+                      <span className="text-sm">{t.generating}</span>
                     </div>
                   ) : null}
                 </div>

@@ -5,6 +5,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useLanguage } from "@/lib/contexts/language-context";
 
 interface SignInFormProps {
   onSuccess?: () => void;
@@ -12,6 +13,7 @@ interface SignInFormProps {
 
 export function SignInForm({ onSuccess }: SignInFormProps) {
   const { signIn, isLoading } = useAuth();
+  const { t } = useLanguage();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -23,17 +25,16 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
     const result = await signIn(email, password);
 
     if (result.success) {
-      // The redirect is handled by the hook
       onSuccess?.();
     } else {
-      setError(result.error || "Failed to sign in");
+      setError(result.error || t.failedSignIn);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">{t.email}</Label>
         <Input
           id="email"
           type="email"
@@ -46,7 +47,7 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password">{t.password}</Label>
         <Input
           id="password"
           type="password"
@@ -64,7 +65,7 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
       )}
 
       <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? "Signing in..." : "Sign In"}
+        {isLoading ? t.signingIn : t.signIn}
       </Button>
     </form>
   );

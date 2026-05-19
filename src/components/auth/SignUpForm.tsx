@@ -5,6 +5,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useLanguage } from "@/lib/contexts/language-context";
 
 interface SignUpFormProps {
   onSuccess?: () => void;
@@ -12,6 +13,7 @@ interface SignUpFormProps {
 
 export function SignUpForm({ onSuccess }: SignUpFormProps) {
   const { signUp, isLoading } = useAuth();
+  const { t } = useLanguage();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -22,24 +24,23 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
     setError("");
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      setError(t.passwordMismatch);
       return;
     }
 
     const result = await signUp(email, password);
 
     if (result.success) {
-      // The redirect is handled by the hook
       onSuccess?.();
     } else {
-      setError(result.error || "Failed to sign up");
+      setError(result.error || t.failedSignUp);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">{t.email}</Label>
         <Input
           id="email"
           type="email"
@@ -52,7 +53,7 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password">{t.password}</Label>
         <Input
           id="password"
           type="password"
@@ -63,12 +64,12 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
           minLength={8}
         />
         <p className="text-xs text-gray-500">
-          Must be at least 8 characters long
+          {t.passwordMinLength}
         </p>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="confirmPassword">Confirm Password</Label>
+        <Label htmlFor="confirmPassword">{t.confirmPassword}</Label>
         <Input
           id="confirmPassword"
           type="password"
@@ -86,7 +87,7 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
       )}
 
       <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? "Creating account..." : "Sign Up"}
+        {isLoading ? t.creatingAccount : t.signUp}
       </Button>
     </form>
   );
