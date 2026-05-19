@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/resizable";
 import { FileSystemProvider } from "@/lib/contexts/file-system-context";
 import { ChatProvider } from "@/lib/contexts/chat-context";
+import { LanguageProvider, useLanguage } from "@/lib/contexts/language-context";
 import { ChatInterface } from "@/components/chat/ChatInterface";
 import { FileTree } from "@/components/editor/FileTree";
 import { CodeEditor } from "@/components/editor/CodeEditor";
@@ -30,8 +31,9 @@ interface MainContentProps {
   };
 }
 
-export function MainContent({ user, project }: MainContentProps) {
+function MainContentInner({ user, project }: MainContentProps) {
   const [activeView, setActiveView] = useState<"preview" | "code">("preview");
+  const { language, setLanguage, t } = useLanguage();
 
   return (
     <FileSystemProvider initialData={project?.data}>
@@ -42,8 +44,30 @@ export function MainContent({ user, project }: MainContentProps) {
             <ResizablePanel defaultSize={35} minSize={25} maxSize={50}>
               <div className="h-full flex flex-col bg-white">
                 {/* Chat Header */}
-                <div className="h-14 flex items-center px-6 border-b border-neutral-200/60">
-                  <h1 className="text-lg font-semibold text-neutral-900 tracking-tight">React Component Generator</h1>
+                <div className="h-14 flex items-center justify-between px-6 border-b border-neutral-200/60">
+                  <h1 className="text-lg font-semibold text-neutral-900 tracking-tight">{t.appTitle}</h1>
+                  <div className="flex gap-1">
+                    <button
+                      onClick={() => setLanguage("en")}
+                      className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                        language === "en"
+                          ? "bg-blue-600 text-white shadow-sm"
+                          : "text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100"
+                      }`}
+                    >
+                      EN
+                    </button>
+                    <button
+                      onClick={() => setLanguage("es")}
+                      className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                        language === "es"
+                          ? "bg-blue-600 text-white shadow-sm"
+                          : "text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100"
+                      }`}
+                    >
+                      ES
+                    </button>
+                  </div>
                 </div>
 
                 {/* Chat Content */}
@@ -67,8 +91,8 @@ export function MainContent({ user, project }: MainContentProps) {
                     }
                   >
                     <TabsList className="bg-white/60 border border-neutral-200/60 p-0.5 h-9 shadow-sm">
-                      <TabsTrigger value="preview" className="data-[state=active]:bg-white data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm text-neutral-600 px-4 py-1.5 text-sm font-medium transition-all">Preview</TabsTrigger>
-                      <TabsTrigger value="code" className="data-[state=active]:bg-white data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm text-neutral-600 px-4 py-1.5 text-sm font-medium transition-all">Code</TabsTrigger>
+                      <TabsTrigger value="preview" className="data-[state=active]:bg-white data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm text-neutral-600 px-4 py-1.5 text-sm font-medium transition-all">{t.preview}</TabsTrigger>
+                      <TabsTrigger value="code" className="data-[state=active]:bg-white data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm text-neutral-600 px-4 py-1.5 text-sm font-medium transition-all">{t.code}</TabsTrigger>
                     </TabsList>
                   </Tabs>
                   <HeaderActions user={user} projectId={project?.id} />
@@ -113,5 +137,13 @@ export function MainContent({ user, project }: MainContentProps) {
         </div>
       </ChatProvider>
     </FileSystemProvider>
+  );
+}
+
+export function MainContent({ user, project }: MainContentProps) {
+  return (
+    <LanguageProvider>
+      <MainContentInner user={user} project={project} />
+    </LanguageProvider>
   );
 }

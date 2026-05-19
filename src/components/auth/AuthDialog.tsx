@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { SignInForm } from "./SignInForm";
 import { SignUpForm } from "./SignUpForm";
+import { useLanguage } from "@/lib/contexts/language-context";
 
 interface AuthDialogProps {
   open: boolean;
@@ -24,6 +25,7 @@ export function AuthDialog({
   defaultMode = "signin",
 }: AuthDialogProps) {
   const [mode, setMode] = useState<"signin" | "signup">(defaultMode);
+  const { t } = useLanguage();
 
   useEffect(() => {
     setMode(defaultMode);
@@ -38,12 +40,10 @@ export function AuthDialog({
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>
-            {mode === "signin" ? "Welcome back" : "Create an account"}
+            {mode === "signin" ? t.welcomeBack : t.createAccount}
           </DialogTitle>
           <DialogDescription>
-            {mode === "signin"
-              ? "Sign in to your account to continue"
-              : "Sign up to start creating AI-powered React components"}
+            {mode === "signin" ? t.signInDescription : t.signUpDescription}
           </DialogDescription>
         </DialogHeader>
 
@@ -58,24 +58,24 @@ export function AuthDialog({
         <div className="mt-4 text-center text-sm">
           {mode === "signin" ? (
             <>
-              Don&apos;t have an account?{" "}
+              {t.noAccount}{" "}
               <Button
                 variant="link"
                 className="p-0 h-auto font-normal"
                 onClick={() => setMode("signup")}
               >
-                Sign up
+                {t.signUpLink}
               </Button>
             </>
           ) : (
             <>
-              Already have an account?{" "}
+              {t.alreadyAccount}{" "}
               <Button
                 variant="link"
                 className="p-0 h-auto font-normal"
                 onClick={() => setMode("signin")}
               >
-                Sign in
+                {t.signInLink}
               </Button>
             </>
           )}

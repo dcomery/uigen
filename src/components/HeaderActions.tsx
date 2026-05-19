@@ -21,6 +21,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { useLanguage } from "@/lib/contexts/language-context";
 
 interface HeaderActionsProps {
   user?: {
@@ -39,6 +40,7 @@ interface Project {
 
 export function HeaderActions({ user, projectId }: HeaderActionsProps) {
   const router = useRouter();
+  const { t } = useLanguage();
   const [authDialogOpen, setAuthDialogOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"signin" | "signup">("signin");
   const [projectsOpen, setProjectsOpen] = useState(false);
@@ -97,10 +99,10 @@ export function HeaderActions({ user, projectId }: HeaderActionsProps) {
       <>
         <div className="flex gap-2">
           <Button variant="outline" className="h-8" onClick={handleSignInClick}>
-            Sign In
+            {t.signIn}
           </Button>
           <Button className="h-8" onClick={handleSignUpClick}>
-            Sign Up
+            {t.signUp}
           </Button>
         </div>
         <AuthDialog
@@ -119,19 +121,19 @@ export function HeaderActions({ user, projectId }: HeaderActionsProps) {
           <PopoverTrigger asChild>
             <Button variant="outline" className="h-8 gap-2" role="combobox">
               <FolderOpen className="h-4 w-4" />
-              {currentProject ? currentProject.name : "Select Project"}
+              {currentProject ? currentProject.name : t.selectProject}
               <ChevronDown className="h-3 w-3 opacity-50" />
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-[300px] p-0" align="end">
             <Command>
               <CommandInput
-                placeholder="Search projects..."
+                placeholder={t.searchProjects}
                 value={searchQuery}
                 onValueChange={setSearchQuery}
               />
               <CommandList>
-                <CommandEmpty>No projects found.</CommandEmpty>
+                <CommandEmpty>{t.noProjectsFound}</CommandEmpty>
                 <CommandGroup>
                   {filteredProjects.map((project) => (
                     <CommandItem
@@ -157,7 +159,7 @@ export function HeaderActions({ user, projectId }: HeaderActionsProps) {
 
       <Button className="flex items-center gap-2 h-8" onClick={handleNewDesign}>
         <Plus className="h-4 w-4" />
-        New Design
+        {t.newDesign}
       </Button>
 
       <Button
@@ -165,7 +167,7 @@ export function HeaderActions({ user, projectId }: HeaderActionsProps) {
         size="icon"
         className="h-8 w-8"
         onClick={handleSignOut}
-        title="Sign out"
+        title={t.signOut}
       >
         <LogOut className="h-4 w-4" />
       </Button>
