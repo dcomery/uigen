@@ -35,6 +35,12 @@ export default function RootLayout({
           >
             Hello World
           </Link>
+          <Link
+            href="/hangman"
+            className="text-sm font-medium text-gray-900 hover:text-blue-600 ml-6"
+          >
+            Hangman
+          </Link>
         </nav>
         {children}
       </body>

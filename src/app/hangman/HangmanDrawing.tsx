@@ -1,15 +1,3 @@
-# Result: Task: Create Hangman SVG Drawing Component
-
-**Task ID:** 0022
-**Step:** 3
-**Worker:** moonshotai/Kimi-K2.6
-**Tokens:** 3510
-**Timestamp:** 2026-06-12T20:25:49.127Z
-
-## Worker Output
-
- ```tsx
-// src/app/hangman/HangmanDrawing.tsx
 interface HangmanDrawingProps {
   wrongGuessCount: number; // 0–6
 }
@@ -57,4 +45,3 @@ export default function HangmanDrawing({ wrongGuessCount }: HangmanDrawingProps)
     </div>
   );
 }
-```

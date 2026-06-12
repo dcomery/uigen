@@ -1,16 +1,3 @@
-# Result: Task: Create Hangman Word Bank
-
-**Task ID:** 0021
-**Step:** 2
-**Worker:** moonshotai/Kimi-K2.6
-**Tokens:** 2687
-**Timestamp:** 2026-06-12T20:22:52.626Z
-
-## Worker Output
-
- **File to create:** `src/app/hangman/words.ts`
-
-```ts
 import { WordEntry } from './types'
 
 export const WORD_BANK: WordEntry[] = [
@@ -56,4 +43,3 @@ export function getRandomWord(): WordEntry {
   const randomIndex = Math.floor(Math.random() * WORD_BANK.length)
   return WORD_BANK[randomIndex]
 }
-```
