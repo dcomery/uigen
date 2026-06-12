@@ -39,3 +39,4 @@ Append-only log of completed advisor tasks. One row per task.
 | Session status | **CLOSED** |
 
 > Note: Task 0019 result included a font swap (Geist → Inter) that was discarded. Only the nav addition (`<Link href="/hello">`) and `import Link` were applied to preserve the existing Geist font setup.
+| 2026-06-12T20:20:31.297Z | 0020 | Task: Create Hangman Data Types | .ss-playground/results/0001-task-create-hangman-data-types.result.md | fb21616 | 4445 |
