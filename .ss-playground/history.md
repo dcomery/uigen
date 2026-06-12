@@ -46,3 +46,4 @@ Append-only log of completed advisor tasks. One row per task.
 | 2026-06-12T20:34:23.910Z | 0024 | Task: Create Hangman Word Display Component | .ss-playground/results/0005-task-create-hangman-word-display-compone.result.md | f76c64f | 4577 |
 | 2026-06-12T20:38:28.851Z | 0025 | Task: Create HangmanApp Root Component | .ss-playground/results/0006-task-create-hangmanapp-root-component.result.md | 5ffddc3 | 4721 |
 | 2026-06-12T20:41:11.460Z | 0026 | Task: Create Hangman Next.js Page Route | .ss-playground/results/0007-task-create-hangman-next-js-page-route.result.md | 0c263c2 | 3124 |
+| 2026-06-12T20:45:27.346Z | 0027 | Task: Add Unit Tests for Hangman Types and Utilities | .ss-playground/results/0008-task-add-unit-tests-for-hangman-types-an.result.md | 0242d62 | 4568 |
